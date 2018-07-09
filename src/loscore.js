@@ -82,7 +82,24 @@ class LoScore {
     return result;
   }
 
-  every() {}
+  every(
+    collection,
+    test = (value) => {
+      return value;
+    }
+  ) {
+    let failTest = true;
+    this.reduce(
+      collection,
+      (accumulator, value) => {
+        if (test(value) == false || value === undefined) {
+          failTest = false;
+        }
+      },
+      failTest
+    );
+    return failTest;
+  }
 
   /**
   | OBJECTS
