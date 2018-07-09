@@ -9,7 +9,20 @@ class LoScore {
   |~~~~~~~~~~
   * */
   uniq(array) {
-    // YOUR CODE HERE
+    const result = [];
+    for (let i = 0; i < array.length; i++) {
+      let isUnique = true;
+      for (let j = 0; j < result.length; j++) {
+        if (array[i] === result[j]) {
+          isUnique = false;
+          break;
+        }
+      }
+      if (isUnique) {
+        result.push(array[i]);
+      }
+    }
+    return result;
   }
 
   /**
