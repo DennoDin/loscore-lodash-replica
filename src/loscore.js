@@ -105,13 +105,11 @@ class LoScore {
   | OBJECTS
   |~~~~~~~~~~
   * */
-  extend(...args) {
-    this.each(...args, (element, index, collection) => {
-      for (key of element) {
-        arguments[0][key] = element[key];
-      }
+  extend(objA, ...objs) {
+    this.each(...objs, (value, key, collection) => {
+      objA[key] = value;
     });
-    return arguments[0];
+    return objA;
   }
 
   /**
@@ -147,11 +145,12 @@ class LoScore {
     const result = [];
     if (typeof functionOrKey === "function") {
       for (let i = 0; i < collection.length; i++) {
-        result.push(functionOrKey(collection[i]));
+        result.push(collection[i][functionOrKey]());
       }
-    } else if (typeof functionOrKey === "string") {
+    } else {
       for (let i = 0; i < collection.length; i++) {
-        result[functionOrKey].apply(collection[i]);
+        let item = collection[i][functionOrKey];
+        result.push(item);
       }
     }
     return result;
