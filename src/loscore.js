@@ -68,13 +68,16 @@ class LoScore {
   reduce(collection, iterator, accumulator) {
     let result;
     if (accumulator) {
-      this.each(collection, (memo, item) => {
-        accumulator = iterator(item);
+      result = iterator(accumulator);
+      this.each(collection, (element) => {
+        result += iterator(element);
+      });
+    } else {
+      result = collection[0];
+      this.each(collection.slice(1), (element) => {
+        result += iterator(element);
       });
     }
-    this.each(collection, (memo, item) => {
-      result = memo + iterator(item);
-    });
     return result;
   }
 
@@ -107,7 +110,16 @@ class LoScore {
   }
 
   memoize(func) {
-    // YOUR CODE HERE
+    const object = {};
+    return function(...args) {
+      const x = JSON.stringify([...args]);
+      if (object[x]) {
+        return object[x];
+      }
+      const result = func(...args);
+      object[x] = result;
+      return result;
+    };
   }
 
   invoke(collection, functionOrKey) {
