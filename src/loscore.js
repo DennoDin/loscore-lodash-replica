@@ -69,13 +69,13 @@ class LoScore {
     let result;
     if (accumulator) {
       result = iterator(accumulator);
-      this.each(collection, (element) => {
-        result += iterator(element);
+      this.each(collection, (memo, item) => {
+        memo += iterator(item);
       });
     } else {
       result = collection[0];
-      this.each(collection.slice(1), (element) => {
-        result += iterator(element);
+      this.each(collection.slice(1), (memo, item) => {
+        memo += iterator(item);
       });
     }
     return result;
@@ -89,8 +89,10 @@ class LoScore {
   | OBJECTS
   |~~~~~~~~~~
   * */
-  extend(obj) {
-    // YOUR CODE HERE
+  extend(...args) {
+    let newObj = {};
+    each(...args, (element) => {});
+    return newObj;
   }
 
   /**
@@ -123,7 +125,17 @@ class LoScore {
   }
 
   invoke(collection, functionOrKey) {
-    // YOUR CODE HERE
+    const result = [];
+    if (typeof functionOrKey === "function") {
+      for (let i = 0; i < collection.length; i++) {
+        result.push(functionOrKey(collection[i]));
+      }
+    } else if (typeof functionOrKey === "string") {
+      for (let i = 0; i < collection.length; i++) {
+        result.push(functionOrKey.apply(collection[i]));
+      }
+    }
+    return result;
   }
 
   /**
