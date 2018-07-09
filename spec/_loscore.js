@@ -611,7 +611,7 @@ describe("LoScore", () => {
         const memoizedFoo = _.memoize(foo);
         memoizedFoo(1, 2);
         memoizedFoo(1, 2);
-        expect(count[key]).toBe(1);
+        expect(count[key]).equal(1);
       });
     });
 
