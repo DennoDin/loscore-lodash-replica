@@ -66,7 +66,16 @@ class LoScore {
   }
 
   reduce(collection, iterator, accumulator) {
-    // YOUR CODE HERE
+    let result;
+    if (accumulator) {
+      this.each(collection, (memo, item) => {
+        accumulator = iterator(item);
+      });
+    }
+    this.each(collection, (memo, item) => {
+      result = memo + iterator(item);
+    });
+    return result;
   }
 
   every() {
@@ -87,7 +96,14 @@ class LoScore {
   * */
 
   once(func) {
-    // YOUR CODE HERE
+    let run = false;
+
+    return function() {
+      if (!run) {
+        run = true;
+        func();
+      }
+    };
   }
 
   memoize(func) {
