@@ -67,32 +67,34 @@ class LoScore {
 
   reduce(collection, iterator, accumulator) {
     let result;
-    if (accumulator) {
-      result = iterator(accumulator);
-      this.each(collection, (memo, item) => {
-        memo += iterator(item);
+    if (accumulator !== undefined) {
+      result = accumulator;
+      this.each(collection, (value) => {
+        result = iterator(result, value);
       });
-    } else {
+    }
+    if (accumulator === undefined) {
       result = collection[0];
-      this.each(collection.slice(1), (memo, item) => {
-        memo += iterator(item);
+      this.each(collection.slice(1), (value) => {
+        result = iterator(result, value);
       });
     }
     return result;
   }
 
-  every() {
-    // YOUR CODE HERE
-  }
+  every() {}
 
   /**
   | OBJECTS
   |~~~~~~~~~~
   * */
   extend(...args) {
-    let newObj = {};
-    each(...args, (element) => {});
-    return newObj;
+    this.each(...args, (element, index, collection) => {
+      for (key of element) {
+        arguments[0][key] = element[key];
+      }
+    });
+    return arguments[0];
   }
 
   /**
@@ -132,7 +134,7 @@ class LoScore {
       }
     } else if (typeof functionOrKey === "string") {
       for (let i = 0; i < collection.length; i++) {
-        result.push(functionOrKey.apply(collection[i]));
+        result[functionOrKey].apply(collection[i]);
       }
     }
     return result;
