@@ -106,7 +106,7 @@ class LoScore {
   |~~~~~~~~~~
   * */
   extend(objA) {
-    this.each(arguments, (value, key, collection) => {
+    this.each(arguments, (value) => {
       let keyArray = Object.keys(value);
       for (let i = 0; i < keyArray.length; i++) {
         objA[keyArray[i]] = value[keyArray[i]];
@@ -149,11 +149,11 @@ class LoScore {
   invoke(collection, functionOrKey) {
     const result = [];
     if (typeof functionOrKey === "function") {
-      this.each(collection, (value, key, collection) => {
+      this.each(collection, (value) => {
         result.push(functionOrKey.apply(value));
       });
     } else {
-      this.each(collection, (value, key, collection) => {
+      this.each(collection, (value) => {
         result.push(value[functionOrKey]());
       });
     }
