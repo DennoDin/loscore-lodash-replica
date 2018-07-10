@@ -92,7 +92,7 @@ class LoScore {
     this.reduce(
       collection,
       (accumulator, value) => {
-        if (test(value) == false || value === undefined) {
+        if (test(value) === false || value === undefined) {
           failTest = false;
         }
       },
@@ -105,8 +105,8 @@ class LoScore {
   | OBJECTS
   |~~~~~~~~~~
   * */
-  extend(objA) {
-    this.each(arguments, (value) => {
+  extend(objA, ...args) {
+    this.each(args, (value) => {
       let keyArray = Object.keys(value);
       for (let i = 0; i < keyArray.length; i++) {
         objA[keyArray[i]] = value[keyArray[i]];
